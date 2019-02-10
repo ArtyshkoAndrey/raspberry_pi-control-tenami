@@ -2,9 +2,173 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/style.css">
 	<title>GPIO</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.5.1/vue-resource.js"></script>
 </head>
 <body>
-	<a href="/blink">Запуск</a>
+	<div class="container" id="app">
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <div class="card shadow">
+          <div class="card-header">Добро пожаловать в ситему</div>
+          <div class="card-body d-flex flex-wrap">
+            <p class="col-12">В данный момент ситема <strong>[[SystemStatus]]</strong></p>
+            <button class="flex-fill btn btn-success mr-3" @click="SystemStart">Включить систему</button>
+            <button class="flex-fill btn btn-danger" @click="SystemStop">Выключить систему</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <div class="card h-100 shadow">
+          <div class="card-header">Настройка времени</div>
+          <div class="card-body">
+            <p class="col-12">Дата на сервере: <strong>[[DateNow]]</strong></p>
+            <p class="col-12">Врем на сервер: <strong>[[TimeNow]]</strong></p>
+
+            <form class="form-inline d-flex flex-nowrap">
+              <div class="form-group mx-sm-3 mb-2 flex-fill">
+                <input type="date" class="form-control w-100" :value="[[DateForInput]]">
+              </div>
+              <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+            </form>
+
+            <form class="form-inline d-flex flex-nowrap">
+              <div class="form-group mx-sm-3 mb-2 flex-fill">
+                <input type="time" class="form-control w-100" :value="[[TimeNow]]">
+              </div>
+              <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+            </form>
+    
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 mt-3">
+        <div class="card shadow">
+          <div class="card-header">Настройка тен</div>
+          <div class="card-body row">
+            <p class="col-12">Настройте температуру включения/выключения тен, а так же период и время</p>
+
+            <div class="col-lg-6">
+              
+              <form class="form-inline d-flex">
+                <h5 class="col-12 font-weight-bold">Включение тен</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="time" class="form-control w-100">
+                </div>
+                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+              </form>
+              <hr>
+              <form class="form-inline d-flex">
+                <h5 class="col-12 font-weight-bold">Выключение тен</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="time" class="form-control w-100">
+                </div>
+                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+              </form>
+              <hr>
+              <form class="form-inline d-flex">
+                <h5 class="col-12 font-weight-bold">Период переключение тен</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="time" class="form-control w-100">
+                </div>
+                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+              </form>
+              <hr class="d-lg-none .d-xl-block">
+            </div>
+
+            <div class="col-lg-6">
+              <form class="form-inline d-flex">
+                <h5 class="col-12 font-weight-bold">Температура включения</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="number" class="form-control w-100">
+                </div>
+                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+              </form>
+              <hr>
+              <form class="form-inline d-flex">
+                <h5 class="col-12 font-weight-bold">Температура выключения</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="number" class="form-control w-100">
+                </div>
+                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <footer class="bg-white mt-5 d-flex align-items-center align-self-center" style="height: 50px">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <span>Powered by <a href="https://artyshko.ru">Fulliton</a> 2019</span>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+<script>
+  var app = new Vue({
+    delimiters: ["[[","]]"],
+    el: '#app',
+    data: {
+      SystemStatus: '',
+      DateNow: null,
+      TimeNow: null,
+      DateForInput: null
+    },
+    methods: {
+      SystemStop () {
+        this.$http.post('/stop').then(function (response) {
+          // Success
+          if (response.data.system === 'off')
+            this.SystemStatus = 'Выключена'
+
+        },function (response) {
+          // Error
+          console.log(response.data)
+        });
+      },
+      SystemStart () {
+        this.$http.post('/blink').then(function (response) {
+          // Success
+          if (response.data.system === 'on')
+            this.SystemStatus = 'Включена'
+
+        },function (response) {
+          // Error
+          console.log(response.data)
+        });
+      }
+    },
+    mounted () {
+      let self = this
+      this.$http.post('/status').then(function (response) {
+        // Success
+        self.TimeNow = response.data.time
+        self.DateNow = response.data.date
+        let now = new Date(response.data.date)
+        self.DateForInput = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
+        if (response.data.system === 'on')
+          self.SystemStatus = 'Включена'
+        else if (response.data.system === 'off')
+          self.SystemStatus = 'Выключена'
+
+      },function (response) {
+        // Error
+        console.log(response.data)
+      });
+    }
+})
+</script>
 </html>
