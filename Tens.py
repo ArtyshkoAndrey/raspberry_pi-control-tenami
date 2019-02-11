@@ -9,16 +9,16 @@ class Tens():
 		self.crTena = 0
 		self.CountTena = 0
 
-	def blink(self):
-
+	# Потоковый метод для двух тэн
+	def TwoHeaters(self):
+		# Алгоритм переключения тэн
 		self.toggleTenaBlink(self.crTena, self.CountTena)
 
 		self.crTena += 1
 		self.CountTena += 1
-
+		# Зброс счётчика
 		if self.crTena == 3:
 			self.crTena = 0
-
 		if self.CountTena == 3:
 			self.CountTena = 0
 
@@ -27,15 +27,16 @@ class Tens():
 		print(self.tena3)
 		time.sleep(5)
 	
-
+	# Алгоритм переключения тен
 	def toggleTenaBlink(self, currentTena, counterTenaPin):
+		# Отключаем не нужную тэну
 		if currentTena == 0:
 			self.tena2 = False
 		elif currentTena == 1:
 			self.tena3 = False
 		else:
 			self.tena1 = False
-
+		# Включем нужную тэну
 		if counterTenaPin == 0:
 			self.tena1 = True
 		elif counterTenaPin == 1:

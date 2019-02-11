@@ -140,7 +140,7 @@
         });
       },
       SystemStart () {
-        this.$http.post('/blink').then(function (response) {
+        this.$http.post('/start').then(function (response) {
           // Success
           if (response.data.system === 'on')
             this.SystemStatus = 'Включена'
