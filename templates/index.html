@@ -12,7 +12,7 @@
 <body>
 	<div class="container" id="app">
     <div class="row">
-      <div class="col-md-6 mt-3">
+      <div class="col-lg-6 mt-3">
         <div class="card shadow">
           <div class="card-header">Добро пожаловать в ситему</div>
           <div class="card-body d-flex flex-wrap">
@@ -22,27 +22,12 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 mt-3">
+      <div class="col-lg-6 mt-3">
         <div class="card h-100 shadow">
           <div class="card-header">Настройка времени</div>
           <div class="card-body">
             <p class="col-12">Дата на сервере: <strong>[[DateNow]]</strong></p>
-            <p class="col-12">Врем на сервер: <strong>[[TimeNow]]</strong></p>
-
-            <form class="form-inline d-flex flex-nowrap">
-              <div class="form-group mx-sm-3 mb-2 flex-fill">
-                <input type="date" class="form-control w-100" :value="[[DateForInput]]">
-              </div>
-              <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
-            </form>
-
-            <form class="form-inline d-flex flex-nowrap">
-              <div class="form-group mx-sm-3 mb-2 flex-fill">
-                <input type="time" class="form-control w-100" :value="[[TimeNow]]">
-              </div>
-              <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
-            </form>
-    
+            <p class="col-12">Врем на сервер: <strong>[[TimeNow]]</strong></p>    
           </div>
         </div>
       </div>
@@ -55,7 +40,10 @@
             <div class="col-lg-6">
               
               <form class="form-inline d-flex">
-                <h5 class="col-12 font-weight-bold">Включение тен</h5>
+                <h5 class="col-12 font-weight-bold">Режим 1</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="time" class="form-control w-100">
+                </div>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
                   <input type="time" class="form-control w-100">
                 </div>
@@ -63,7 +51,10 @@
               </form>
               <hr>
               <form class="form-inline d-flex">
-                <h5 class="col-12 font-weight-bold">Выключение тен</h5>
+                <h5 class="col-12 font-weight-bold">Режим 2</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="time" class="form-control w-100">
+                </div>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
                   <input type="time" class="form-control w-100">
                 </div>
@@ -71,9 +62,20 @@
               </form>
               <hr>
               <form class="form-inline d-flex">
-                <h5 class="col-12 font-weight-bold">Период переключение тен</h5>
+                <h5 class="col-12 font-weight-bold">Режим 3</h5>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
                   <input type="time" class="form-control w-100">
+                </div>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="time" class="form-control w-100">
+                </div>
+                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+              </form>
+              <hr>
+              <form class="form-inline d-flex">
+                <h5 class="col-12 font-weight-bold">Период переключение тен (минуты)</h5>
+                <div class="form-group mx-sm-3 mb-2 flex-fill">
+                  <input type="number" class="form-control w-100">
                 </div>
                 <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
               </form>
@@ -125,7 +127,6 @@
       SystemStatus: '',
       DateNow: null,
       TimeNow: null,
-      DateForInput: null
     },
     methods: {
       SystemStop () {
@@ -149,21 +150,19 @@
           // Error
           console.log(response.data)
         });
-      }
+      },
     },
     mounted () {
       let self = this
       this.$http.post('/status').then(function (response) {
         // Success
         self.TimeNow = response.data.time
-        self.DateNow = response.data.date
         let now = new Date(response.data.date)
-        self.DateForInput = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
+        self.DateNow = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
         if (response.data.system === 'on')
           self.SystemStatus = 'Включена'
         else if (response.data.system === 'off')
           self.SystemStatus = 'Выключена'
-
       },function (response) {
         // Error
         console.log(response.data)
