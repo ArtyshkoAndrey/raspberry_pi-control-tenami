@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from raspberry import RaspberryThread
 import os
 from time import sleep
-from tena import test
+from SmartSystem import SmartSystem
 import datetime
 
 app = Flask(__name__)
@@ -28,6 +28,8 @@ def blink_view():
 def stop():
     if request.method == 'POST':
         testecho.pause()
+        system.blink.pause()
+        system.cheked = False
         dictToReturn = {'system': 'off'}
         return jsonify(dictToReturn)
 
@@ -51,7 +53,8 @@ def status():
 
 if __name__ == '__main__':
     # Create threads
-    testecho = RaspberryThread(function=test)
+    system = SmartSystem()
+    testecho = RaspberryThread(function=system.loop)
 
     # collect threads
     threads = [
