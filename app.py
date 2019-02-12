@@ -33,7 +33,7 @@ def start():
 def stop():
     if request.method == 'POST':
         # Дописать метод и вызов его, отключение потоков в system
-        Smart.pause()
+        any(thread.pause() for thread in threads)
         System.TwoHeaters.pause()
         System.cheked = False
         dictToReturn = {'system': 'off'}
@@ -46,6 +46,9 @@ def status():
         now = datetime.datetime.now()
         dateNow = now.strftime("%Y-%m-%d")
         timeNow = now.strftime("%H:%M")
+
+        times = System.times
+
         if not Smart.paused:
             dictToReturn = "on"
         else:
@@ -53,9 +56,37 @@ def status():
         response = {
             'system': dictToReturn,
             'date': dateNow,
-            'time': timeNow
+            'time': timeNow,
+            'times': times,
+            'timer': System.Tens.TimeSleep
         }
         return jsonify(response)
+
+@app.route("/tenatimes/<int:time1>/<int:time2>/<string:cheked>/<int:mode>", methods=['POST'])
+def tenatimes(time1, time2, cheked, mode):
+    if request.method == 'POST':
+        System.times[mode][0] = int(time1)
+        System.times[mode][1] = int(time2)
+        if cheked == "true":
+            System.times[mode][2] = True
+        elif cheked == "false":
+            System.times[mode][2] = False
+
+        cmd = {
+            'time1': System.times[mode][0],
+            'time2': System.times[mode][1],
+            'cheked': System.times[mode][2]
+        }
+        return jsonify(cmd)
+
+@app.route("/timer/<int:minutes>", methods=['POST'])
+def timer(minutes):
+    if request.method == 'POST':
+        System.Tens.TimeSleep = minutes
+        cmd = {
+            'timer': System.Tens.TimeSleep
+        }
+        return jsonify(cmd)
 
 if __name__ == '__main__':
     # Создание обьекта и потока

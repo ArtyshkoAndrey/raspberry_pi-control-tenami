@@ -17,8 +17,8 @@
           <div class="card-header">Добро пожаловать в ситему</div>
           <div class="card-body d-flex flex-wrap">
             <p class="col-12">В данный момент ситема <strong>[[SystemStatus]]</strong></p>
-            <button class="flex-fill btn btn-success mr-3" @click="SystemStart">Включить систему</button>
-            <button class="flex-fill btn btn-danger" @click="SystemStop">Выключить систему</button>
+            <button class="flex-fill btn btn-success mr-md-3 mt-1" @click="SystemStart">Включить систему</button>
+            <button class="flex-fill btn btn-danger mt-1" @click="SystemStop">Выключить систему</button>
           </div>
         </div>
       </div>
@@ -39,45 +39,66 @@
 
             <div class="col-lg-6">
               
-              <form class="form-inline d-flex">
+              <form class="form-inline d-flex" v-on:submit.prevent="SetTimeTen">
                 <h5 class="col-12 font-weight-bold">Режим 1</h5>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="time" class="form-control w-100">
+                  <input type="time" class="form-control w-100" name="time1" :value="[[TimeTens[0][0] + ':00']]">
                 </div>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="time" class="form-control w-100">
+                  <input type="time" class="form-control w-100" name="time2" :value="[[TimeTens[0][1] + ':00']]">
                 </div>
-                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+                <div class="form-check flex-fill my-3">
+                  <input class="form-check-input" type="checkbox" name="cheked" v-model="TimeTens[0][2]">
+                  <label class="form-check-label">
+                    Запуск
+                  </label>
+                </div>
+                <input type="hidden" name="mode" value="0">
+                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr>
-              <form class="form-inline d-flex">
+              <form class="form-inline d-flex" v-on:submit.prevent="SetTimeTen">
                 <h5 class="col-12 font-weight-bold">Режим 2</h5>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="time" class="form-control w-100">
+                  <input type="time" class="form-control w-100" name="time1" :value="[[TimeTens[1][0] + ':00']]">
                 </div>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="time" class="form-control w-100">
+                  <input type="time" class="form-control w-100" name="time2" :value="[[TimeTens[1][1] + ':00']]">
                 </div>
-                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+                <div class="form-check flex-fill my-3">
+                  <input class="form-check-input" type="checkbox" name="cheked" v-model="TimeTens[1][2]">
+                  <label class="form-check-label">
+                    Запуск
+                  </label>
+                </div>
+                <input type="hidden" name="mode" value="1">
+                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr>
-              <form class="form-inline d-flex">
+              <form class="form-inline d-flex" v-on:submit.prevent="SetTimeTen">
                 <h5 class="col-12 font-weight-bold">Режим 3</h5>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="time" class="form-control w-100">
+                  <input type="time" class="form-control w-100" name="time1" :value="[[TimeTens[2][0] + ':00']]">
                 </div>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="time" class="form-control w-100">
+                  <input type="time" class="form-control w-100" name="time2" :value="[[TimeTens[2][1] + ':00']]">
                 </div>
-                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+                <div class="form-check flex-fill my-3">
+                  <input class="form-check-input" type="checkbox" name="cheked" v-model="TimeTens[2][2]">
+                  <label class="form-check-label">
+                    Запуск
+                  </label>
+                </div>
+                <input type="hidden" name="mode" value="2">
+                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr>
-              <form class="form-inline d-flex">
+              <form class="form-inline d-flex" v-on:submit.prevent="SetTimer">
                 <h5 class="col-12 font-weight-bold">Период переключение тен (минуты)</h5>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="number" class="form-control w-100">
+                  <input type="number" class="form-control w-100" name="timer" :value = "Timer">
                 </div>
-                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr class="d-lg-none .d-xl-block">
             </div>
@@ -96,6 +117,7 @@
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
                   <input type="number" class="form-control w-100">
                 </div>
+                <input type="hidden" name="mode" value="2">
                 <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
               </form>
             </div>
@@ -127,6 +149,8 @@
       SystemStatus: '',
       DateNow: null,
       TimeNow: null,
+      TimeTens: [],
+      Timer: null
     },
     methods: {
       SystemStop () {
@@ -138,6 +162,7 @@
         },function (response) {
           // Error
           console.log(response.data)
+          alert('Ошибка')
         });
       },
       SystemStart () {
@@ -149,8 +174,38 @@
         },function (response) {
           // Error
           console.log(response.data)
+          alert('Ошибка')
         });
       },
+      SetTimeTen(submitEvent) {
+        let time1 = Number(submitEvent.target.elements.time1.value[0] + "" + submitEvent.target.elements.time1.value[1])
+        let time2 = Number(submitEvent.target.elements.time2.value[0] + "" + submitEvent.target.elements.time2.value[1])
+        let mode = Number(submitEvent.target.elements.mode.value)
+        let cheked = this.TimeTens[mode][2] + ''
+        let self = this
+        this.$http.post('/tenatimes/' + time1 +'/' + time2+'/' +cheked + '/' + mode).then(function (response) {
+          if (response.data.cheked == self.TimeTens[mode][2] && Number(response.data.time1) == time1 && Number(response.data.time2) == time2) {
+            alert('Настройки сохранены удачно')
+          } else {
+            alert('Ошибка')
+          }
+        }, function (response) {
+          alert('Ошибка')
+        })
+      },
+      SetTimer(submitEvent) {
+        // let timer = Number(submitEvent.target.elements.timer.value) * 60
+        let timer = Number(submitEvent.target.elements.timer.value) // Пока дев секунды будут
+        if (timer <= 0)
+          return alert('Введите число больше нуля')
+        this.$http.post('/timer/' + timer).then(function (response) {
+          if (Number(response.data.timer) == timer) {
+            alert('Настройки сохранены удачно')
+          } else {
+            console.log('Ошибка')
+          }
+        })
+      }
     },
     mounted () {
       let self = this
@@ -163,9 +218,20 @@
           self.SystemStatus = 'Включена'
         else if (response.data.system === 'off')
           self.SystemStatus = 'Выключена'
+        self.TimeTens = response.data.times
+
+        self.TimeTens.forEach( function (time, index) {
+          for (let i = 0; i < 2; i++) {
+            if (time[i] < 10)
+            self.TimeTens[index][i] = "0" + self.TimeTens[index][i]
+          }
+        })
+        // На продакшене делить на 60
+        self.Timer = Number(response.data.timer)
       },function (response) {
         // Error
         console.log(response.data)
+        alert('Ошибка')
       });
     }
 })
