@@ -4,6 +4,10 @@ from time import sleep
 from SmartSystem import SmartSystem
 import datetime
 import os
+from jsondb.db import Database
+from DatabaseFunctions import save
+
+db = Database("data.db")
 
 app = Flask(__name__)
 
@@ -25,7 +29,9 @@ def start():
             Smart.start()
         # Снятие потока с паузы
         Smart.resume()
+        db['system']['system'] = 'on'
         dictToReturn = {'system': 'on'}
+        save(db, Smart, System)
         return jsonify(dictToReturn)
 
 # Маршрут отключение системы и всех потоков
@@ -37,6 +43,7 @@ def stop():
         System.TwoHeaters.pause()
         System.cheked = False
         dictToReturn = {'system': 'off'}
+        save(db, Smart, System)
         return jsonify(dictToReturn)
 
 # Получение всех данных для spa
@@ -77,15 +84,23 @@ def tenatimes(time1, time2, cheked, mode):
             'time2': System.times[mode][1],
             'cheked': System.times[mode][2]
         }
+
+        save(db, Smart, System)
         return jsonify(cmd)
 
 @app.route("/timer/<int:minutes>", methods=['POST'])
 def timer(minutes):
+    # TODO что быне приходилось дожидать конец прошлого таймера, 
+    # необходимо удалять моток полностью и создавать заново с новым временем
     if request.method == 'POST':
         System.Tens.TimeSleep = minutes
+        save(db, Smart, System)
+        print(db['system']['timer'])
+
         cmd = {
             'timer': System.Tens.TimeSleep
         }
+
         return jsonify(cmd)
 
 if __name__ == '__main__':
@@ -97,6 +112,16 @@ if __name__ == '__main__':
     threads = [
         Smart,
     ]
+
+    System.times = db['system']['times']
+    System.Tens.TimeSleep = db['system']['timer']
+
+    if db['system']['system'] == 'on':
+        if not Smart.isAlive():
+            Smart.start()
+        Smart.resume()
+    else:
+        Smart.pause()
 
     # Запуск сервера
     app.run( debug=True, host="0.0.0.0", port="80", threaded=True)

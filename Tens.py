@@ -25,6 +25,8 @@ class Tens():
 		print(self.tena1)
 		print(self.tena2)
 		print(self.tena3)
+		print(self.TimeSleep)
+		print("--------")
 		time.sleep(self.TimeSleep)
 	
 	# Алгоритм переключения тен
