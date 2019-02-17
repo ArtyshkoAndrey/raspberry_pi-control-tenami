@@ -60,3 +60,14 @@ class Tens():
 		else:
 			self.tena3 = True
 			GPIO.output(19,GPIO.HIGH)
+
+	def OffHeaters(self):
+		GPIO.output(20,GPIO.LOW)
+		GPIO.output(19,GPIO.LOW)
+		GPIO.output(21,GPIO.LOW)
+		self.tena1 = False
+		self.tena2 = False
+		self.tena3 = False
+		self.crTena = 0
+		self.CountTena = 0
+		print('Тены выключелись')
