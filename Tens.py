@@ -14,6 +14,9 @@ class Tens():
 		GPIO.setup(19,GPIO.OUT) # Тена 3
 		GPIO.setup(20,GPIO.OUT) # Тена 2
 		GPIO.setup(21,GPIO.OUT) # Тена 1
+		GPIO.output(20,GPIO.LOW)
+		GPIO.output(19,GPIO.LOW)
+		GPIO.output(21,GPIO.LOW)
 
 	# Потоковый метод для двух тэн
 	def TwoHeaters(self):
