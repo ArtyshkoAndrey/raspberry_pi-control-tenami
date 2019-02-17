@@ -140,3 +140,10 @@ def timer(minutes):
 if __name__ == '__main__':
     # Запуск сервера
     app.run(host="0.0.0.0", port="80")
+    def handler(signal, frame):
+        print('CTRL-C pressed!')
+        GPIO.cleanup()
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, handler)
+    signal.pause()
