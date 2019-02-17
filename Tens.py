@@ -40,10 +40,13 @@ class Tens():
 		# Отключаем не нужную тэну
 		if currentTena == 0:
 			self.tena2 = False
+			GPIO.output(20,GPIO.LOW)
 		elif currentTena == 1:
 			self.tena3 = False
+			GPIO.output(19,GPIO.LOW)
 		else:
 			self.tena1 = False
+			GPIO.output(21,GPIO.LOW)
 		# Включем нужную тэну
 		if counterTenaPin == 0:
 			self.tena1 = True
