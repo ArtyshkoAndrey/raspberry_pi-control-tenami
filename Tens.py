@@ -9,6 +9,8 @@ class Tens():
 		self.TimeSleep = 2
 		self.crTena = 0
 		self.CountTena = 0
+		GPIO.setmode(GPIO.BCM)
+		GPIO.setwarnings(False)
 
 	# Потоковый метод для двух тэн
 	def TwoHeaters(self):
