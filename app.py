@@ -7,6 +7,10 @@ import os
 from jsondb.db import Database
 from DatabaseFunctions import save
 from Temperature import read_temp
+import RPi.GPIO as GPIO
+import sys
+import signal
+
 
 db = Database("data.db")
 
