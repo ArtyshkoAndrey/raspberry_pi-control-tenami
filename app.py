@@ -12,6 +12,32 @@ db = Database("data.db")
 
 app = Flask(__name__)
 
+
+# Создание обьекта и потока
+System = SmartSystem()
+Smart = RaspberryThread(function=System.loop)
+
+# Коллекция потоков
+threads = [
+    Smart,
+]
+
+System.times = db['system']['times']
+System.Tens.TimeSleep = db['system']['timer']
+
+System.setTens()
+    
+Smart.setDaemon(True)
+
+if db['system']['system'] == 'on':
+    if not Smart.isAlive():
+        Smart.start()
+    Smart.resume()
+else:
+    Smart.pause()
+    
+print("test")
+
 # Если открыли главную то вывод spa
 @app.route("/")
 def index():
@@ -43,6 +69,7 @@ def stop():
         any(thread.pause() for thread in threads)
         System.TwoHeaters.pause()
         System.cheked = False
+        System.Tens.OffHeaters()
         dictToReturn = {'system': 'off'}
         save(db, Smart, System)
         return jsonify(dictToReturn)
@@ -93,7 +120,7 @@ def tenatimes(time1, time2, cheked, mode):
 
 @app.route("/timer/<int:minutes>", methods=['POST'])
 def timer(minutes):
-    # TODO что быне приходилось дожидать конец прошлого таймера, 
+    # TODO что бы не приходилось дожидать конец прошлого таймера, 
     # необходимо удалять моток полностью и создавать заново с новым временем
     if request.method == 'POST':
         System.Tens.TimeSleep = minutes
@@ -107,24 +134,5 @@ def timer(minutes):
         return jsonify(cmd)
 
 if __name__ == '__main__':
-    # Создание обьекта и потока
-    System = SmartSystem()
-    Smart = RaspberryThread(function=System.loop)
-
-    # Коллекция потоков
-    threads = [
-        Smart,
-    ]
-
-    System.times = db['system']['times']
-    System.Tens.TimeSleep = db['system']['timer']
-
-    if db['system']['system'] == 'on':
-        if not Smart.isAlive():
-            Smart.start()
-        Smart.resume()
-    else:
-        Smart.pause()
-
     # Запуск сервера
-    app.run( debug=True, host="0.0.0.0", port="80", threaded=True)
+    app.run(host="0.0.0.0", port="80")
