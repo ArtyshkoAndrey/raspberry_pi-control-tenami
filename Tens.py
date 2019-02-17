@@ -50,7 +50,10 @@ class Tens():
 		# Включем нужную тэну
 		if counterTenaPin == 0:
 			self.tena1 = True
+			GPIO.output(21,GPIO.HIGH)
 		elif counterTenaPin == 1:
 			self.tena2 = True
+			GPIO.output(20,GPIO.HIGH)
 		else:
 			self.tena3 = True
+			GPIO.output(19,GPIO.HIGH)
