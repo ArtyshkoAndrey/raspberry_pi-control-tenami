@@ -17,8 +17,8 @@
           <div class="card-header">Добро пожаловать в ситему</div>
           <div class="card-body d-flex flex-wrap">
             <p class="col-12">В данный момент ситема <strong>[[SystemStatus]]</strong></p>
-            <button class="flex-fill btn btn-success mr-md-3 mt-1" @click="SystemStart">Включить систему</button>
-            <button class="flex-fill btn btn-danger mt-1" @click="SystemStop">Выключить систему</button>
+            <button class="flex-fill btn btn-outline-success mr-md-3 mt-1" @click="SystemStart">Включить систему</button>
+            <button class="flex-fill btn btn-outline-danger mt-1" @click="SystemStop">Выключить систему</button>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
                   </label>
                 </div>
                 <input type="hidden" name="mode" value="0">
-                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
+                <button class="btn btn-outline-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr>
               <form class="form-inline d-flex" v-on:submit.prevent="SetTimeTen">
@@ -74,7 +74,7 @@
                   </label>
                 </div>
                 <input type="hidden" name="mode" value="1">
-                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
+                <button class="btn btn-outline-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr>
               <form class="form-inline d-flex" v-on:submit.prevent="SetTimeTen">
@@ -92,7 +92,7 @@
                   </label>
                 </div>
                 <input type="hidden" name="mode" value="2">
-                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
+                <button class="btn btn-outline-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr>
               <form class="form-inline d-flex" v-on:submit.prevent="SetTimer">
@@ -100,7 +100,7 @@
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
                   <input type="number" class="form-control w-100" name="timer" :value = "Timer">
                 </div>
-                <button class="btn btn-primary mb-2 flex-fill" type="submit">Сохранить</button>
+                <button class="btn btn-outline-primary mb-2 flex-fill" type="submit">Сохранить</button>
               </form>
               <hr class="d-lg-none .d-xl-block">
             </div>
@@ -111,7 +111,7 @@
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
                   <input type="number" class="form-control w-100">
                 </div>
-                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+                <button class="btn btn-outline-primary mb-2 flex-fill">Сохранить</button>
               </form>
               <hr>
               <form class="form-inline d-flex">
@@ -120,7 +120,7 @@
                   <input type="number" class="form-control w-100">
                 </div>
                 <input type="hidden" name="mode" value="2">
-                <button class="btn btn-primary mb-2 flex-fill">Сохранить</button>
+                <button class="btn btn-outline-primary mb-2 flex-fill">Сохранить</button>
               </form>
             </div>
           </div>
