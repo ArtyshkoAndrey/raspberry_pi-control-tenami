@@ -6,6 +6,7 @@ import datetime
 import os
 from jsondb.db import Database
 from DatabaseFunctions import save
+from Temperature import read_temp
 
 db = Database("data.db")
 
