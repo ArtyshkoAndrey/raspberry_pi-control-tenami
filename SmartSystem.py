@@ -42,32 +42,6 @@ class SmartSystem():
 				# Меняем на True так как поток уже запущен
 				self.cheked = True
 		else:
-			self.cheked = False
-			self.TwoHeaters.pause()
-
-		# for time in self.times:
-		# 	if now >= time[0] or now <= time[1]:
-		# 		if time[2] == True:
-		# 			# Запуск тэн если прошло время
-		# 			if self.cheked == False:
-		# 				# Запуск если первый раз запустили системы
-		# 				if not self.TwoHeaters.isAlive() or self.TwoHeaters.paused == True:
-		# 					# Запуск потока если не запускался ни разу
-		# 					self.TwoHeaters.start()
-		# 				# Возобновляем потомк так как по умолчию он остановлен
-		# 				self.TwoHeaters.resume()
-		# 				# Меняем на True так как поток уже запущен
-		# 				self.cheked = True
-		# 			else:
-		# 				break
-		# 		else:
-		# 			if self.cheked == True:
-		# 				break
-		# 			else:
-		# 				print('stop')
-		# 				if self.TwoHeaters.paused == False:
-		# 					self.TwoHeaters.pause()
-		# 				self.cheked = False
 
 		# Остановка по времени
 		sleep(2)
