@@ -1,4 +1,5 @@
 import time
+import RPi.GPIO as GPIO
 
 class Tens():
 	def __init__(self):
