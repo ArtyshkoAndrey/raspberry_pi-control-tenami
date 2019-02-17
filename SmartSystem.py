@@ -42,9 +42,14 @@ class SmartSystem():
 				# Меняем на True так как поток уже запущен
 				self.cheked = True
 		else:
+			if self.cheked != False:
+				self.cheked = False
+				self.TwoHeaters.pause()
+				self.Tens.OffHeaters()
 
 		# Остановка по времени
 		sleep(2)
+
 	def setTens(self):
 		self.TwoHeaters = RaspberryThread(function=self.Tens.TwoHeaters)
 		self.TwoHeaters.setDaemon(True)
