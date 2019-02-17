@@ -212,6 +212,8 @@
       let self = this
       this.$http.post('/status').then(function (response) {
         // Success
+        self.Temperature[0] = Number(response.data.temp1)
+        self.Temperature[1] = Number(response.data.temp2)
         self.TimeNow = response.data.time
         let now = new Date(response.data.date)
         self.DateNow = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
