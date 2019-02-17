@@ -66,7 +66,9 @@ def status():
             'date': dateNow,
             'time': timeNow,
             'times': times,
-            'timer': System.Tens.TimeSleep
+            'timer': System.Tens.TimeSleep,
+            'temp1': read_temp(),
+            'temp2': read_temp(),
         }
         return jsonify(response)
 
