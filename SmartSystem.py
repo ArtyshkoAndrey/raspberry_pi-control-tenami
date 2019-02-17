@@ -45,3 +45,7 @@ class SmartSystem():
 
 		# Остановка по времени
 		sleep(2)
+	def setTens(self):
+		self.TwoHeaters = RaspberryThread(function=self.Tens.TwoHeaters)
+		self.TwoHeaters.setDaemon(True)
+		print(self.TwoHeaters.isDaemon())
