@@ -214,6 +214,7 @@
       let self = this
       this.$http.post('/status').then(function (response) {
         // Success
+        console.log(response.data)
         self.Temperature[0] = Number(response.data.temp1)
         self.Temperature[1] = Number(response.data.temp2)
         self.TimeNow = response.data.time
