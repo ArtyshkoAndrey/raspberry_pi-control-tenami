@@ -11,6 +11,9 @@ class Tens():
 		self.CountTena = 0
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setwarnings(False)
+		GPIO.setup(19,GPIO.OUT) # Тена 3
+		GPIO.setup(20,GPIO.OUT) # Тена 2
+		GPIO.setup(21,GPIO.OUT) # Тена 1
 
 	# Потоковый метод для двух тэн
 	def TwoHeaters(self):
