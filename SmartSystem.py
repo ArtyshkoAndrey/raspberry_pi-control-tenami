@@ -7,7 +7,7 @@ from datetime import datetime, time
 class SmartSystem():
 	def __init__(self):
 		self.Tens = Tens()
-		self.TwoHeaters = RaspberryThread(function=self.Tens.TwoHeaters)
+		self.TwoHeaters = None
 		# collect threads
 		self.threads = [
 			self.TwoHeaters
