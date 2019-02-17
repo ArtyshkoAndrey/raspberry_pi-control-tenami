@@ -5,7 +5,6 @@ class RaspberryThread(threading.Thread):
         self.paused = True
         self.state = threading.Condition()
         self.function = function
-        self.deamon = False
         super(RaspberryThread, self).__init__()
 
     def start(self):
