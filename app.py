@@ -98,8 +98,8 @@ def status():
             'time': timeNow,
             'times': times,
             'timer': System.Tens.TimeSleep,
-            'temp1': read_temp(),
-            'temp2': read_temp(),
+            'temp1': read_temp('28-000006af66d1'),
+            'temp2': read_temp('28-000006dde2ec'),
         }
         return jsonify(response)
 
