@@ -185,6 +185,9 @@
         let time2 = Number(submitEvent.target.elements.time2.value[0] + "" + submitEvent.target.elements.time2.value[1])
         let mode = Number(submitEvent.target.elements.mode.value)
         let cheked = this.TimeTens[mode][2] + ''
+        this.TimeTens[mode][0] = time1
+        this.TimeTens[mode][1] = time2
+        console.log(this.TimeTens[mode][0])
         let self = this
         this.$http.post('/tenatimes/' + time1 +'/' + time2+'/' +cheked + '/' + mode).then(function (response) {
           if (response.data.cheked == self.TimeTens[mode][2] && Number(response.data.time1) == time1 && Number(response.data.time2) == time2) {
