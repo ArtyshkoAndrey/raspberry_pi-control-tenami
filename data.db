@@ -1,1 +1,1 @@
-{"system": {"system": "on", "timer": 20, "times": [[2, 11, false], [14, 20, false], [21, 1, true]]}}
+{"system": {"times": [[2, 11, false], [12, 20, false], [21, 1, true]], "system": "on", "timer": 20, "temp": [27, 30]}}
