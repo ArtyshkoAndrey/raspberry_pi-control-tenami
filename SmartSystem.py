@@ -3,6 +3,7 @@ from time import sleep
 from raspberry import RaspberryThread
 from array import array
 from datetime import datetime, time
+from Temperature import read_temp
 
 class SmartSystem():
 	def __init__(self):
