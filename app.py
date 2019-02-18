@@ -141,6 +141,11 @@ if __name__ == '__main__':
     # Запуск сервера
     app.run(host="0.0.0.0", port="80")
     def handler(signal, frame):
+        print('Остановка всех потоков')
+        any(thread.pause() for thread in threads)
+        System.TwoHeaters.pause()
+        System.cheked = False
+        System.Tens.OffHeaters()
         GPIO.cleanup()
         sys.exit(0)
 
