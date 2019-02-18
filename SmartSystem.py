@@ -16,6 +16,8 @@ class SmartSystem():
 		self.cheked = False
 		# Третий элемент то checkbox если отключили что бы тэны включались в данное время
 		self.times = [[2, 11, True], [14, 20, True], [21, 1, True]]
+		self.temp = [28, 30]
+		self.tempnow = None
 
 	def loop(self):
 		print("Массив температуры", self.temp)
