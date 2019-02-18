@@ -132,7 +132,16 @@ def timer(minutes):
         cmd = {
             'timer': System.Tens.TimeSleep
         }
+        return jsonify(cmd)
 
+@app.route("/settemp/<int:temp>/<int:mode>", methods=['POST'])
+def settemp(temp, mode):
+    if request.method == 'POST':
+        System.temp[mode] = temp
+        save(db, Smart, System)
+        cmd = {
+            'temp': System.temp
+        }
         return jsonify(cmd)
 
 if __name__ == '__main__':
