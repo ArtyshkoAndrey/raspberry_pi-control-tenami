@@ -11,9 +11,7 @@ import RPi.GPIO as GPIO
 import sys
 import signal
 
-
 db = Database("data.db")
-
 app = Flask(__name__)
 
 # Создание обьекта и потока
@@ -92,6 +90,7 @@ def status():
             dictToReturn = "on"
         else:
             dictToReturn = "off"
+
         response = {
             'system': dictToReturn,
             'date': dateNow,
@@ -130,7 +129,6 @@ def timer(minutes):
         System.Tens.TimeSleep = minutes
         save(db, Smart, System)
         print(db['system']['timer'])
-
         cmd = {
             'timer': System.Tens.TimeSleep
         }

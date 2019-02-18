@@ -9,7 +9,6 @@ base_dir = '/sys/bus/w1/devices/'
 # device1_folder = base_dir + '28-000006af66d1' дом
 # device2_folder = base_dir + '28-000006dde2ec' Отопление
 
- 
 def read_temp_raw(device_file):
     f = open(device_file, 'r')
     lines = f.readlines()

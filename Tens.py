@@ -37,7 +37,7 @@ class Tens():
 		print(self.TimeSleep)
 		print("--------")
 		time.sleep(self.TimeSleep)
-	
+
 	# Алгоритм переключения тен
 	def TwoHeatersBlink(self, currentTena, counterTenaPin):
 		# Отключаем не нужную тэну

@@ -6,6 +6,7 @@ from datetime import datetime, time
 from Temperature import read_temp
 
 class SmartSystem():
+	
 	def __init__(self):
 		self.Tens = Tens()
 		self.TwoHeaters = None
