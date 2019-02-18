@@ -91,14 +91,15 @@ def status():
         else:
             dictToReturn = "off"
 
+        tempnow = [read_temp('28-000006af66d1'), read_temp('28-000006dde2ec')]
         response = {
             'system': dictToReturn,
             'date': dateNow,
             'time': timeNow,
             'times': times,
             'timer': System.Tens.TimeSleep,
-            'temp1': read_temp('28-000006af66d1'),
-            'temp2': read_temp('28-000006dde2ec'),
+            'tempnow': tempnow,
+            'temp': System.temp
         }
         return jsonify(response)
 
