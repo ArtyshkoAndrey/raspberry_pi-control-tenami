@@ -28,8 +28,8 @@
           <div class="card-body">
             <p class="col-12">Дата на сервере: <strong>[[DateNow]]</strong></p>
             <p class="col-12">Врем на сервер: <strong>[[TimeNow]]</strong></p>
-            <p class="col-12">Темература в дома: <strong>[[ Temperature[0] ]]</strong></p>
-            <p class="col-12">Темература в отопления: <strong>[[ Temperature[1] ]]</strong></p>   
+            <p class="col-12">Темература в дома: <strong>[[ TemperatureNow[0] ]]</strong></p>
+            <p class="col-12">Темература в отопления: <strong>[[ TemperatureNow[1] ]]</strong></p>   
           </div>
         </div>
       </div>
@@ -106,20 +106,21 @@
             </div>
 
             <div class="col-lg-6">
-              <form class="form-inline d-flex">
+              <form class="form-inline d-flex" v-on:submit.prevent="SetTemp">
                 <h5 class="col-12 font-weight-bold">Температура включения</h5>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="number" class="form-control w-100">
+                  <input type="number" class="form-control w-100" name="temp" v-model="Temperature[0]">
+                  <input type="hidden" value="0" name="mode">
                 </div>
                 <button class="btn btn-outline-primary mb-2 flex-fill">Сохранить</button>
               </form>
               <hr>
-              <form class="form-inline d-flex">
+              <form class="form-inline d-flex" v-on:submit.prevent="SetTemp">
                 <h5 class="col-12 font-weight-bold">Температура выключения</h5>
                 <div class="form-group mx-sm-3 mb-2 flex-fill">
-                  <input type="number" class="form-control w-100">
+                  <input type="number" class="form-control w-100" name="temp" v-model="Temperature[1]">
+                  <input type="hidden" value="1" name="mode">
                 </div>
-                <input type="hidden" name="mode" value="2">
                 <button class="btn btn-outline-primary mb-2 flex-fill">Сохранить</button>
               </form>
             </div>
@@ -149,11 +150,12 @@
     el: '#app',
     data: {
       SystemStatus: '',
-      Temperature: [],
+      TemperatureNow: [],
       DateNow: null,
       TimeNow: null,
       TimeTens: [[],[],[]],
-      Timer: null
+      Timer: null,
+      Temperature: []
     },
     methods: {
       SystemStop () {
@@ -211,6 +213,20 @@
             console.log('Ошибка')
           }
         })
+      },
+      SetTemp(submitEvent) {
+        let temp =  Number(submitEvent.target.elements.temp.value)
+        let mode = Number(submitEvent.target.elements.mode.value)
+        let self = this
+        this.$http.post('/settemp/' + temp + '/' + mode).then(function (response) {
+          if (self.Temperature.includes(response.data.temp[0]) || self.Temperature.includes(response.data.temp[1])) {
+            alert('Настройки сохранены удачно')
+          } else {
+            alert('Ошибка')
+          }
+        }, function (response) {
+          console.log('Ошибка')
+        })
       }
     },
     mounted () {
@@ -218,8 +234,10 @@
       this.$http.post('/status').then(function (response) {
         // Success
         console.log(response.data)
-        self.Temperature[0] = Number(response.data.temp1)
-        self.Temperature[1] = Number(response.data.temp2)
+        self.TemperatureNow[0] = Number(response.data.tempnow[0])
+        self.TemperatureNow[1] = Number(response.data.tempnow[1])
+        self.Temperature[0] = Number(response.data.temp[0])
+        self.Temperature[1] = Number(response.data.temp[1])
         self.TimeNow = response.data.time
         let now = new Date(response.data.date)
         self.DateNow = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2)
