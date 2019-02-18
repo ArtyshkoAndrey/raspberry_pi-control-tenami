@@ -129,7 +129,6 @@ def timer(minutes):
     if request.method == 'POST':
         System.Tens.TimeSleep = minutes
         save(db, Smart, System)
-        print(db['system']['timer'])
         cmd = {
             'timer': System.Tens.TimeSleep
         }
