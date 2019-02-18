@@ -36,16 +36,6 @@ class SmartSystem():
 					counter += 1
 
 		if counter != 0:
-			# Запуск тэн если прошло время
-			if self.cheked == False:
-				# Запуск если первый раз запустили системы
-				if not self.TwoHeaters.isAlive():
-					# Запуск потока если не запускался ни разу
-					self.TwoHeaters.start()
-				# Возобновляем потомк так как по умолчию он остановлен
-				self.TwoHeaters.resume()
-				# Меняем на True так как поток уже запущен
-				self.cheked = True
 			if self.tempnow > self.temp[1]:
 				print("Не прошло по температуре")
 				if self.cheked != False:
@@ -78,4 +68,4 @@ class SmartSystem():
 	def setTens(self):
 		self.TwoHeaters = RaspberryThread(function=self.Tens.TwoHeaters)
 		self.TwoHeaters.setDaemon(True)
-		print(self.TwoHeaters.isDaemon())
+		print("Поток тен создан")
