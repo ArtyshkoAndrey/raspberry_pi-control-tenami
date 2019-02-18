@@ -28,6 +28,7 @@ threads = [
 # Берём данные с бд
 System.times = db['system']['times']
 System.Tens.TimeSleep = db['system']['timer']
+System.temp = db['system']['temp']
 
 # Вызов метода создания потока
 System.setTens()

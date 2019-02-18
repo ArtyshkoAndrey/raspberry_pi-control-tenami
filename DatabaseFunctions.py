@@ -10,7 +10,8 @@ def save(db, Smart, System):
 	response = {
 		'system': dictToReturn,
 		'times': System.times,
-		'timer': System.Tens.TimeSleep
+		'timer': System.Tens.TimeSleep,
+		'temp': System.temp
 	}
 
 	db['system'] = response
