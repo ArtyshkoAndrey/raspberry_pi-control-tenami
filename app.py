@@ -16,7 +16,6 @@ db = Database("data.db")
 
 app = Flask(__name__)
 
-
 # Создание обьекта и потока
 System = SmartSystem()
 Smart = RaspberryThread(function=System.loop)
@@ -26,21 +25,21 @@ threads = [
     Smart,
 ]
 
+# Берём данные с бд
 System.times = db['system']['times']
 System.Tens.TimeSleep = db['system']['timer']
 
+# Вызов метода создания потока
 System.setTens()
-    
 Smart.setDaemon(True)
 
+# Предварительный запуск системы
 if db['system']['system'] == 'on':
     if not Smart.isAlive():
         Smart.start()
     Smart.resume()
 else:
     Smart.pause()
-    
-print("test")
 
 # Если открыли главную то вывод spa
 @app.route("/")
@@ -141,7 +140,6 @@ if __name__ == '__main__':
     # Запуск сервера
     app.run(host="0.0.0.0", port="80")
     def handler(signal, frame):
-        print('CTRL-C pressed!')
         GPIO.cleanup()
         sys.exit(0)
 

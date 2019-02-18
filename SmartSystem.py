@@ -17,9 +17,10 @@ class SmartSystem():
 		self.times = [[2, 11, True], [14, 20, True], [21, 1, True]]
 
 	def loop(self):
+		print("Массив температуры", self.temp)
+		print("Температура отопления", self.tempnow)
 		# Время в данный момент
 		now = datetime.now().time()
-
 		counter = 0
 
 		for timer in self.times:
@@ -41,14 +42,17 @@ class SmartSystem():
 				self.TwoHeaters.resume()
 				# Меняем на True так как поток уже запущен
 				self.cheked = True
+				print("Не прошло по температуре")
+				print("Прошло по температуре")
 		else:
+			print("Не прошло по времени")
 			if self.cheked != False:
 				self.cheked = False
 				self.TwoHeaters.pause()
 				self.Tens.OffHeaters()
 
 		# Остановка по времени
-		sleep(2)
+		print("Остановка --------------- ")
 
 	def setTens(self):
 		self.TwoHeaters = RaspberryThread(function=self.Tens.TwoHeaters)
